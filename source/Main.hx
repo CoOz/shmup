@@ -10,7 +10,7 @@ import flash.ui.Keyboard;
 import org.flixel.FlxGame;
 
 /**
- * @author Sylvain GRESSER-as
+ * @author Sylvain GRESSER
  */
 class Main extends Sprite 
 {
