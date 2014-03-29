@@ -30,6 +30,8 @@ class AssetData {
 			type.set ("assets/data/beep.mp3", Reflect.field (AssetType, "music".toUpperCase ()));
 			className.set ("assets/data/beep2.mp3", nme.NME_assets_data_beep2_mp3);
 			type.set ("assets/data/beep2.mp3", Reflect.field (AssetType, "music".toUpperCase ()));
+			className.set ("assets/data/Boom.mp3", nme.NME_assets_data_boom_mp3);
+			type.set ("assets/data/Boom.mp3", Reflect.field (AssetType, "music".toUpperCase ()));
 			className.set ("assets/data/button.png", nme.NME_assets_data_button_png);
 			type.set ("assets/data/button.png", Reflect.field (AssetType, "image".toUpperCase ()));
 			className.set ("assets/data/button_a.png", nme.NME_assets_data_button_a_png);
@@ -118,6 +120,8 @@ class AssetData {
 			type.set ("assets/plasma.png", Reflect.field (AssetType, "image".toUpperCase ()));
 			className.set ("assets/plasma2.png", nme.NME_assets_plasma2_png);
 			type.set ("assets/plasma2.png", Reflect.field (AssetType, "image".toUpperCase ()));
+			className.set ("assets/reset.png", nme.NME_assets_reset_png);
+			type.set ("assets/reset.png", Reflect.field (AssetType, "image".toUpperCase ()));
 			className.set ("assets/ship.png", nme.NME_assets_ship_png);
 			type.set ("assets/ship.png", Reflect.field (AssetType, "image".toUpperCase ()));
 			className.set ("assets/space1.png", nme.NME_assets_space1_png);
@@ -142,6 +146,7 @@ class NME_assets_data_autotiles_alt_png extends flash.display.BitmapData { publi
 class NME_assets_data_base_png extends flash.display.BitmapData { public function new () { super (0, 0); } }
 class NME_assets_data_beep_mp4 extends flash.media.Sound { }
 class NME_assets_data_beep2_mp3 extends flash.media.Sound { }
+class NME_assets_data_boom_mp3 extends flash.media.Sound { }
 class NME_assets_data_button_png extends flash.display.BitmapData { public function new () { super (0, 0); } }
 class NME_assets_data_button_a_png extends flash.display.BitmapData { public function new () { super (0, 0); } }
 class NME_assets_data_button_b_png extends flash.display.BitmapData { public function new () { super (0, 0); } }
@@ -186,6 +191,7 @@ class NME_assets_nyancat_png extends flash.display.BitmapData { public function 
 class NME_assets_openfl_svg extends flash.utils.ByteArray { }
 class NME_assets_plasma_png extends flash.display.BitmapData { public function new () { super (0, 0); } }
 class NME_assets_plasma2_png extends flash.display.BitmapData { public function new () { super (0, 0); } }
+class NME_assets_reset_png extends flash.display.BitmapData { public function new () { super (0, 0); } }
 class NME_assets_ship_png extends flash.display.BitmapData { public function new () { super (0, 0); } }
 class NME_assets_space1_png extends flash.display.BitmapData { public function new () { super (0, 0); } }
 class NME_assets_space3_png extends flash.display.BitmapData { public function new () { super (0, 0); } }
