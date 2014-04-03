@@ -1,9 +1,9 @@
 package;
 //import haxe.io.BytesData.Unsigned_char__;
 import haxe.Timer;
-import org.flixel.FlxState;
-import org.flixel.FlxTypedGroup.FlxTypedGroup;
-import org.flixel.util.FlxRect;
+import flixel.FlxState;
+import flixel.group.FlxTypedGroup.FlxTypedGroup;
+import flixel.util.FlxRect;
 
 import flash.display.Bitmap;
 import flash.events.KeyboardEvent;
@@ -11,17 +11,16 @@ import flash.ui.Keyboard;
 import openfl.Assets;
 import flash.geom.Rectangle;
 import flash.net.SharedObject;
-import org.flixel.FlxGroup;
-import org.flixel.plugin.photonstorm.FlxBitmapFont;
+import flixel.group.FlxGroup;
 
-import org.flixel.FlxButton;
-import org.flixel.FlxG;
-import org.flixel.FlxPath;
-import org.flixel.FlxSave;
-import org.flixel.FlxSprite;
-import org.flixel.FlxText;
-import org.flixel.FlxObject;
-import org.flixel.util.FlxMath;
+import flixel.ui.FlxButton;
+import flixel.FlxG;
+import flixel.util.FlxPath;
+import flixel.util.FlxSave;
+import flixel.FlxSprite;
+import flixel.text.FlxText;
+import flixel.FlxObject;
+import flixel.util.FlxMath;
 import flash.Lib;
 import flash.events.KeyboardEvent;
 
@@ -93,8 +92,8 @@ class  PlayState extends FlxState
 			ship.maxVelocity.x = ship.maxVelocity.y = plasma.maxVelocity.x = plasma.maxVelocity.y = 200;	// On règle la velocité maximal des objets sur x et sur y
 			enemi.maxVelocity.x = enemi.maxVelocity.y = 100;
 
-			plasma.addAnimation("reacteur", [0, 2, 4], 30, true);			// Ajout à 'objet plasma 'animation "réacteur" qui joue les frames 0,2,4 de plasma.png à 60 frames par seconde en boucle.
-			plasma.play("reacteur"); 										// Jouer 'animation "réacteur"
+			plasma.animation.add("reacteur", [0, 2, 4], 30, true);			// Ajout à 'objet plasma 'animation "réacteur" qui joue les frames 0,2,4 de plasma.png à 60 frames par seconde en boucle.
+			plasma.animation.play("reacteur"); 										// Jouer 'animation "réacteur"
 			
 			add(skin);
 			add(ship);														// ajout de 'objet ship sur la fenêtre
@@ -109,7 +108,7 @@ class  PlayState extends FlxState
 			Lib.current.stage.addEventListener(flash.events.KeyboardEvent.KEY_DOWN,AppuiTouche);
 			Lib.current.stage.addEventListener(flash.events.KeyboardEvent.KEY_UP, RelacheTouche);
 			
-			FlxG.mute = false;
+			FlxG.sound.muted = false;
 			Musique(0);
 			
 			FlxG.camera.follow(ship);
@@ -126,8 +125,8 @@ class  PlayState extends FlxState
 		function Musique(ok)
 		{
 			if (ok == 0)
-				FlxG.play("assets/data/intro.mp3", 1, false, true, null);
-			else FlxG.play("assets/data/beep2.mp3", 1, true, true, null);
+				FlxG.sound.play("assets/data/intro.mp3", 1, false, true, null);
+			else FlxG.sound.play("assets/data/beep2.mp3", 1, true, true, null);
 		}
 		
 		function SupprBoom(Boom:FlxObject, enemi:FlxObject)
@@ -167,12 +166,12 @@ class  PlayState extends FlxState
 					if (pause)
 					{
 						pause = false;										// retirer la pause
-						FlxG.resumeSounds();								// lire la musique
+						FlxG.sound.resumeSounds();								// lire la musique
 					}
 					else
 					{
 						pause = true;										// mettre en pause
-						FlxG.pauseSounds();									// Mettre la musique sur pause
+						FlxG.sound.pauseSounds();									// Mettre la musique sur pause
 						FlxG.switchState(new PauseState(this));
 					}
 				}
@@ -204,20 +203,20 @@ class  PlayState extends FlxState
 			
 			if (e.keyCode == Keyboard.U)									// si la touche appuyée est 'U'
 			{
-				FlxG.volume += 0.05;										// augmenté le son
-				FlxG.play("assets/data/beep.mp3", 1, false, true, null);
+				FlxG.sound.volume += 0.05;										// augmenté le son
+				FlxG.sound.play("assets/data/beep.mp3", 1, false, true, null);
 			}
 			
 			if (e.keyCode == Keyboard.L)									// si la touche appuyée est 'L'
 			{
-				FlxG.volume -= 0.05;										// diminué le son
-				FlxG.play("assets/data/beep.mp3", 1, false, true, null);
+				FlxG.sound.volume -= 0.05;										// diminué le son
+				FlxG.sound.play("assets/data/beep.mp3", 1, false, true, null);
 			}
 			
 			if (e.keyCode == Keyboard.M)									// si la touche appuyée est ''
 			{
-				FlxG.mute = !FlxG.mute;										// coupé le son
-				FlxG.play("assets/data/beep.mp3", 1, false, true, null);
+				FlxG.sound.muted = !FlxG.sound.muted;										// coupé le son
+				FlxG.sound.play("assets/data/beep.mp3", 1, false, true, null);
 			}
 		}
 		
@@ -231,7 +230,7 @@ class  PlayState extends FlxState
 			override public function update():Void
 		{
 			ship.angle = 0;													// 'objet ship reprend un angle de 0 degré
-			ship.frame = 0;
+			ship.frame.tileID = 0;
 			ok++;
 			
 			if (ok == 59) Musique(ok);
@@ -269,7 +268,7 @@ class  PlayState extends FlxState
 			{
 				ship.acceleration.x = plasma.acceleration.x = 2 * ship.maxVelocity.x;	// on donne une vitesse positive sur y à 'objet ship (avancer)
 				ship.angle = 7;															// un angle de 5 degrès
-				ship.frame = 1;															// et la frame 1
+				ship.frame.tileID = 1;															// et la frame 1
 			}
 			
 			else if (!TabTouche[3] && !pause)
@@ -280,7 +279,7 @@ class  PlayState extends FlxState
 			{
 				ship.acceleration.x = plasma.acceleration.x = -2 * ship.maxVelocity.x;	// on donne une vitesse négative sur x à 'ojet ship (reculer)
 				ship.angle = -7;														// un angle de -10 degrès
-				ship.frame = 2;															// et on met la frame 1
+				ship.frame.tileID = 2;															// et on met la frame 1
 			}
 			
 			else if (!TabTouche[1] && !pause)
@@ -290,7 +289,7 @@ class  PlayState extends FlxState
 			{
 				ship.acceleration.y = plasma.acceleration.y = -2 * ship.maxVelocity.y;	// on donne une vitesse négative sur y à 'objet ship (monter)
 				ship.angle = -10;														// on donne un angle de -10
-				ship.frame = 0;															// et on utilise la seconde frame
+				ship.frame.tileID = 0;															// et on utilise la seconde frame
 			}
 			
 			else if (!TabTouche[2] && !pause)
@@ -300,7 +299,7 @@ class  PlayState extends FlxState
 			{
 				ship.acceleration.y = plasma.acceleration.y = 2 * ship.maxVelocity.y;	// on donne une vitesse positive sur y à 'objet ship (descendre)
 				ship.angle = 10;														// un angle de 10 degrès
-				ship.frame = 0;															// on met la frame 0
+				ship.frame.tileID = 0;															// on met la frame 0
 			}
 			
 			else if (!TabTouche[0] && !pause)
@@ -308,15 +307,15 @@ class  PlayState extends FlxState
 			
 			if (Fire[0] && missile_delai == 0 && !pause)
 			{
-				FlxG.play("assets/data/fire.mp3", 1, false, true, null);	// Jouer un son
+				FlxG.sound.play("assets/data/fire.mp3", 1, false, true, null);	// Jouer un son
 				missiles = new FlxSprite();
 				missiles.loadGraphic("assets/missile.png", true, false, 16, 4);
-				missiles.addAnimation("tourne", [0, 1, 2, 3], 15, true);
+				missiles.animation.add("tourne", [0, 1, 2, 3], 15, true);
 				missiles.scale.x = missiles.scale.y = zoom;
 				missiles.y = ship.y + 20;
 				missiles.x = ship.x - 10;
 				missiles.acceleration.x = 300;					// on donne une vitesse positive sur x à 'objet missile (avancer)
-				missiles.play("tourne");
+				missiles.animation.play("tourne");
 				add(missiles);									// ajout de 'objet missile sur la fenêtre
 				missile_delai = 15;
 				BoomM.add(missiles);
@@ -324,15 +323,15 @@ class  PlayState extends FlxState
 			
 			if (Fire[1] && fire_delai == 0 && !pause)
 			{
-				FlxG.play("assets/data/Piou.mp3", .75, false, true, null);	// Jouer un son	
+				FlxG.sound.play("assets/data/Piou.mp3", .75, false, true, null);	// Jouer un son	
 				mis_fire = new FlxSprite();
 				mis_fire.loadGraphic("assets/mis_fire.png", true, false, 8, 8);
-				mis_fire.addAnimation("avance", [0, 1, 2, 3, 4, 5], 15, true);
+				mis_fire.animation.add("avance", [0, 1, 2, 3, 4, 5], 15, true);
 				mis_fire.scale.x = mis_fire.scale.y = zoom / 2;
 				mis_fire.y = ship.y;
 				mis_fire.x = ship.x + 5;
 				mis_fire.acceleration.x = 250;					// on donne une vitesse positive sur x à 'objet missile (avancer)
-				mis_fire.play("avance");
+				mis_fire.animation.play("avance");
 				add(mis_fire);									// ajout de l'objet mis_fire sur la fenêtre
 				fire_delai = 10;
 				BoomF.add(mis_fire);

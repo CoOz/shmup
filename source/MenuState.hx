@@ -6,18 +6,17 @@ import flash.ui.Keyboard;
 import openfl.Assets;
 import flash.geom.Rectangle;
 import flash.net.SharedObject;
-import org.flixel.FlxGroup;
-import org.flixel.plugin.photonstorm.FlxBitmapFont;
+import flixel.group.FlxGroup;
 
-import org.flixel.FlxButton;
-import org.flixel.FlxG;
-import org.flixel.FlxPath;
-import org.flixel.FlxSave;
-import org.flixel.FlxSprite;
-import org.flixel.FlxState;
-import org.flixel.FlxText;
-import org.flixel.FlxObject;
-import org.flixel.util.FlxMath;
+import flixel.ui.FlxButton;
+import flixel.FlxG;
+import flixel.util.FlxPath;
+import flixel.util.FlxSave;
+import flixel.FlxSprite;
+import flixel.FlxState;
+import flixel.text.FlxText;
+import flixel.FlxObject;
+import flixel.util.FlxMath;
 import flash.Lib;
 import flash.events.KeyboardEvent;
 

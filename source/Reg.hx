@@ -1,6 +1,6 @@
 package;
 
-import org.flixel.FlxSave;
+import flixel.util.FlxSave;
 
 /**
 * Handy, pre-built Registry class that can be used to store 
@@ -36,7 +36,7 @@ class Reg
 	static public var saves:Array<FlxSave> = [];
 	/**
 	 * Generic container for a <code>FlxSave</code>. You might want to 
-	 * consider assigning <code>FlxG._game._prefsSave</code> to this in
+	 * consider assigning <code>FlxG.game._prefsSave</code> to this in
 	 * your state if you want to use the same save flixel uses internally
 	 */
 	static public var save:FlxSave;
