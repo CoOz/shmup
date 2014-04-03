@@ -7,6 +7,7 @@ import openfl.Assets;
 import flash.geom.Rectangle;
 import flash.net.SharedObject;
 import flixel.group.FlxGroup;
+import flixel.addons.text.FlxBitmapFont;
 
 import flixel.ui.FlxButton;
 import flixel.FlxG;
@@ -20,7 +21,7 @@ import flixel.util.FlxMath;
 import flash.Lib;
 import flash.events.KeyboardEvent;
 
-class PauseState extends FlxState
+class Reset extends FlxState
 {
 	var Jeu:PlayState;
 	
@@ -36,29 +37,23 @@ class PauseState extends FlxState
 		FlxG.mouse.visible=true;												// Show the mouse (in case it hasn't been disabled)
 		#end
 		
-		var menu_pause:FlxSprite = new FlxSprite();
-		var reprendre:FlxButton = new FlxButton((640 - 80) / 2, (480 - 20) / 2, "REPRENDRE", reprendre_jeu);
-		var recommencer:FlxButton = new FlxButton((640 - 80) / 2, (480 - 20) / 2 - 20, "RECOMMENCER", recommencer_jeu);
-		var option:FlxButton = new FlxButton(640 / 2, 480 / 2 - 50, "OPTION", option_jeu);
-		menu_pause.loadGraphic("assets/space3.png");
+		var menu_reset:FlxSprite = new FlxSprite();
+		var reprendre:FlxButton = new FlxButton((640 - 80) / 2, (480 - 20) / 2, "OUI",oui);
+		var recommencer:FlxButton = new FlxButton((640 - 80) / 2, (480 - 20) / 2 - 20, "NON", non);
+		menu_reset.loadGraphic("assets/reset.png");
 		
-		add(menu_pause);
-		add(reprendre);
-		add(recommencer);
+		add(menu_reset);
+		//add(oui);
+		//add(non);
 	}
 	
-	function reprendre_jeu()
+	function non()
 	{
-		FlxG.switchState(this.Jeu);
+		FlxG.switchState(Jeu);
 	}
 	
-	function recommencer_jeu()
+	function oui()
 	{
-		FlxG.switchState(new PlayState());
-	}
-	
-	function option_jeu()
-	{
-		
+		FlxG.switchState(new MenuState());
 	}
 }

@@ -28,7 +28,7 @@ import flash.events.KeyboardEvent;
  * ...
  * @author Sylvain
  */
-class  PlayState extends FlxState
+class PlayState extends FlxState
 {
 
 	var skin:FlxSprite;
@@ -87,8 +87,6 @@ class  PlayState extends FlxState
 			enemi.x = (Math.random()* 680)+400;
 			enemi.y = (Math.random()* 480);
 			
-			trace(enemi.x, enemi.y);
-			
 			ship.maxVelocity.x = ship.maxVelocity.y = plasma.maxVelocity.x = plasma.maxVelocity.y = 200;	// On règle la velocité maximal des objets sur x et sur y
 			enemi.maxVelocity.x = enemi.maxVelocity.y = 100;
 
@@ -124,9 +122,9 @@ class  PlayState extends FlxState
 	*/	
 		function Musique(ok)
 		{
-			if (ok == 0)
-				FlxG.sound.play("assets/data/intro.mp3", 1, false, true, null);
-			else FlxG.sound.play("assets/data/beep2.mp3", 1, true, true, null);
+			//if (ok == 0)
+			//	FlxG.sound.play("assets/data/intro.mp3", 1, false, true, null);
+			//else FlxG.sound.play("assets/data/beep2.mp3", 1, true, true, null);
 		}
 		
 		function SupprBoom(Boom:FlxObject, enemi:FlxObject)
@@ -166,12 +164,12 @@ class  PlayState extends FlxState
 					if (pause)
 					{
 						pause = false;										// retirer la pause
-						FlxG.sound.resumeSounds();								// lire la musique
+						FlxG.sound.resume();								// lire la musique
 					}
 					else
 					{
 						pause = true;										// mettre en pause
-						FlxG.sound.pauseSounds();									// Mettre la musique sur pause
+						FlxG.sound.pause();									// Mettre la musique sur pause
 						FlxG.switchState(new PauseState(this));
 					}
 				}
@@ -343,61 +341,61 @@ class  PlayState extends FlxState
 			
 			if (enemi.x < 200 && enemi.y < 100)		// En haut à gauche
 			{
-				enemi.acceleration.x = Math.round(Math.random() + 1) * enemi.maxVelocity.x;
-				enemi.acceleration.y = Math.round(Math.random() + 1) * enemi.maxVelocity.y;
+			//	enemi.acceleration.x = Math.round(Math.random() + 1) * enemi.maxVelocity.x;
+			//	enemi.acceleration.y = Math.round(Math.random() + 1) * enemi.maxVelocity.y;
 			}
 			
 			if (enemi.x < 200 && enemi.y > 563 - 100)	// En bas à gauche
 			{
-				enemi.acceleration.x = Math.round(Math.random() + 1) * enemi.maxVelocity.x;
-				enemi.acceleration.y = - Math.round(Math.random() + 1) * enemi.maxVelocity.y;
+			//	enemi.acceleration.x = Math.round(Math.random() + 1) * enemi.maxVelocity.x;
+			//	enemi.acceleration.y = - Math.round(Math.random() + 1) * enemi.maxVelocity.y;
 			}
 			
 			if (enemi.x > skin.width - 200 && enemi.y < 100)	// En haut à droite
 			{
-				enemi.acceleration.x = - Math.round(Math.random() + 1) * enemi.maxVelocity.x;
-				enemi.acceleration.y = Math.round(Math.random() + 1) * enemi.maxVelocity.y;
+			//	enemi.acceleration.x = - Math.round(Math.random() + 1) * enemi.maxVelocity.x;
+			//	enemi.acceleration.y = Math.round(Math.random() + 1) * enemi.maxVelocity.y;
 			}
 			
 			if (enemi.x > skin.width - 200 && enemi.y > 563 - 100)	// En bas à droite
 			{
-				enemi.acceleration.x = - Math.round(Math.random() + 1) * enemi.maxVelocity.x;
-				enemi.acceleration.y = - Math.round(Math.random() + 1) * enemi.maxVelocity.y;
+			//	enemi.acceleration.x = - Math.round(Math.random() + 1) * enemi.maxVelocity.x;
+			//	enemi.acceleration.y = - Math.round(Math.random() + 1) * enemi.maxVelocity.y;
 			}
 			
 			if (enemi.x < 200)					// A gauche [Camera]
 			{
 				enemi.x = 200;
-				enemi.acceleration.x = Math.round(Math.random() + 1) * enemi.maxVelocity.x;
+			//	enemi.acceleration.x = Math.round(Math.random() + 1) * enemi.maxVelocity.x;
 			}
 			
 			if (enemi.x > skin.width - 200)		// A droite [largeur - camera]
 			{
 				enemi.x = skin.width - 200;
-				enemi.acceleration.x = - Math.round(Math.random() + 1) * enemi.maxVelocity.x;
+			//	enemi.acceleration.x = - Math.round(Math.random() + 1) * enemi.maxVelocity.x;
 			}
 			
 			if (enemi.y < 100)				// En haut [camera]
 			{
 				enemi.y = 100;
-				enemi.acceleration.y = Math.round(Math.random() + 1) * enemi.maxVelocity.y;
+			//	enemi.acceleration.y = Math.round(Math.random() + 1) * enemi.maxVelocity.y;
 			}
 			
 			if (enemi.y > 563 - 100) 		// En bas [hauteur - camera]
 			{
 				enemi.y = 563 - 100;
-				enemi.acceleration.y = - Math.round(Math.random() + 1) * enemi.maxVelocity.y;
+			//	enemi.acceleration.y = - Math.round(Math.random() + 1) * enemi.maxVelocity.y;
 			}
 			
 			//TOUCHER
 			
 			FlxG.collide(BoomM, enemi, SupprBoom);
 			FlxG.collide(BoomF, enemi, SupprBoom);
-		//	trace(Boom);
+			trace(SupprBoom);
 			
 			//RECOMENCER
 			
 			if (reset)
-				FlxG.resetState();
+				FlxG.switchState(new Reset(this));
 		}
 }

@@ -44,6 +44,7 @@
 	
 	<haxelib name="openfl" />
 	<haxelib name="flixel"/>
+	<haxelib name="flixel-addons"/>
 	
     <!--Disable the Flixel core debugger-->
     <!--<haxedef name="FLX_NO_DEBUG" />-->

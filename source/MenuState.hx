@@ -26,7 +26,7 @@ class MenuState extends FlxState
 	override public function create ():Void
 	{
 		#if !FLX_NO_MOUSE
-		FlxG.mouse.show();												// Show the mouse (in case it hasn't been disabled)
+		FlxG.mouse.visible=true;												// Show the mouse (in case it hasn't been disabled)
 		#end
 		
 		var menu_fond:FlxSprite = new FlxSprite();
