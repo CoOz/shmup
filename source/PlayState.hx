@@ -41,6 +41,8 @@ class PlayState extends FlxState
 	var BoomM:FlxTypedGroup<FlxSprite>;
 	var BoomF:FlxTypedGroup<FlxSprite>;
 	
+	var Joueur:FlxTypedGroup<FlxSprite>;
+	
 	var zoom:Int = 2;									// Choix de la taille des objets
 	
 	var missiles:FlxSprite;
@@ -52,9 +54,10 @@ class PlayState extends FlxState
 	var fire_delai:UInt = 0;
 	
 	var ok:UInt = 0;
+	var timer:Timer;
 	
 	var reset:Bool = false;
-	var pause:Bool = false;
+	public var pause:Bool = false;
 		
 		override public function create():Void
 		{
@@ -90,8 +93,8 @@ class PlayState extends FlxState
 			ship.maxVelocity.x = ship.maxVelocity.y = plasma.maxVelocity.x = plasma.maxVelocity.y = 200;	// On règle la velocité maximal des objets sur x et sur y
 			enemi.maxVelocity.x = enemi.maxVelocity.y = 100;
 
-			plasma.animation.add("reacteur", [0, 2, 4], 30, true);			// Ajout à 'objet plasma 'animation "réacteur" qui joue les frames 0,2,4 de plasma.png à 60 frames par seconde en boucle.
-			plasma.animation.play("reacteur"); 										// Jouer 'animation "réacteur"
+			plasma.animation.add("reacteur", [0, 2, 4], 30, true);			// Ajout à l'objet plasma 'animation "réacteur" qui joue les frames 0,2,4 de plasma.png à 60 frames par seconde en boucle.
+			plasma.animation.play("reacteur"); 										// Jouer l'animation "réacteur"
 			
 			add(skin);
 			add(ship);														// ajout de 'objet ship sur la fenêtre
@@ -99,9 +102,11 @@ class PlayState extends FlxState
 			add(enemi);
 			
 			enemi.health = 100;
+			ship.health = 100;
+			plasma.health = 100;
 			
-			enemi.acceleration.x = Math.round(Math.random() + 1) * enemi.maxVelocity.x;
-			enemi.acceleration.y = Math.round(Math.random() + 1) * enemi.maxVelocity.y;
+		//	enemi.acceleration.x = Math.round(Math.random() + 1) * enemi.maxVelocity.x;
+		//	enemi.acceleration.y = Math.round(Math.random() + 1) * enemi.maxVelocity.y;
 			
 			Lib.current.stage.addEventListener(flash.events.KeyboardEvent.KEY_DOWN,AppuiTouche);
 			Lib.current.stage.addEventListener(flash.events.KeyboardEvent.KEY_UP, RelacheTouche);
@@ -122,17 +127,33 @@ class PlayState extends FlxState
 	*/	
 		function Musique(ok)
 		{
-			//if (ok == 0)
-			//	FlxG.sound.play("assets/data/intro.mp3", 1, false, true, null);
-			//else FlxG.sound.play("assets/data/beep2.mp3", 1, true, true, null);
+			if (ok == 0)
+				FlxG.sound.play("assets/data/intro.mp3", 1, false, true, null);
+			else FlxG.sound.play("assets/data/beep2.mp3", 1, true, true, null);
 		}
 		
 		function SupprBoom(Boom:FlxObject, enemi:FlxObject)
 		{
-		//	FlxG.camera.follow(enemi);
+			FlxG.camera.follow(enemi);
+			FlxG.camera.deadzone = new FlxRect(200, 100, 240, 280);
 			Boom.kill();
-			enemi.kill();
-			enemi.hurt(50);
+			enemi.hurt(20);
+			FlxG.sound.play("assets/data/Boom.mp3", 1, false, true, null);
+			timer = new Timer(500);
+			timer.run = function()
+			{
+			FlxG.camera.follow(ship);
+			FlxG.camera.deadzone = new FlxRect(200, 100, 240, 280);
+			timer.stop();
+			}
+		}
+		
+		function collision(ship:FlxObject, enemi:FlxObject)
+		{
+			ship.hurt(50);
+			plasma.hurt(50);
+			enemi.hurt(10);
+			FlxG.sound.play("assets/data/Boom.mp3", 1, false, true, null);
 		}
 		
 		function AppuiTouche(e:KeyboardEvent)
@@ -391,11 +412,14 @@ class PlayState extends FlxState
 			
 			FlxG.collide(BoomM, enemi, SupprBoom);
 			FlxG.collide(BoomF, enemi, SupprBoom);
-			trace(SupprBoom);
+			FlxG.collide(ship, enemi, collision);
 			
 			//RECOMENCER
 			
 			if (reset)
-				FlxG.switchState(new Reset(this));
+			{
+				FlxG.resetState();
+				FlxG.switchState(new MenuState());
+			}
 		}
 }

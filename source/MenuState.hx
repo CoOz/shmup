@@ -30,15 +30,21 @@ class MenuState extends FlxState
 		#end
 		
 		var menu_fond:FlxSprite = new FlxSprite();
-		var Jouer:FlxButton = new FlxButton((640 - 80) / 2, (480 - 20) / 2, "Jouer", Click_Gauche);
+		var Jouer:FlxButton = new FlxButton((640 - 80) / 2, 480 / 2, "JOUER", Click_Gauche);
+		var option:FlxButton = new FlxButton((640 - 80) / 2, 480 / 2 + 50, "OPTION", option_jeu);
 		
 		menu_fond.loadGraphic("assets/fond.png");
 		add(menu_fond);
 		add(Jouer);
+		add(option);
 	}
 	function Click_Gauche()
 		{
 			FlxG.switchState(new PlayState());
 		}
-	
+		
+	function option_jeu()
+	{
+		
+	}
 }

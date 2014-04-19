@@ -37,14 +37,15 @@ class PauseState extends FlxState
 		#end
 		
 		var menu_pause:FlxSprite = new FlxSprite();
-		var reprendre:FlxButton = new FlxButton((640 - 80) / 2, (480 - 20) / 2, "REPRENDRE", reprendre_jeu);
-		var recommencer:FlxButton = new FlxButton((640 - 80) / 2, (480 - 20) / 2 - 20, "RECOMMENCER", recommencer_jeu);
-		var option:FlxButton = new FlxButton(640 / 2, 480 / 2 - 50, "OPTION", option_jeu);
+		var reprendre:FlxButton = new FlxButton((640 - 80) / 2, (480 - 20) / 2 - 20, "REPRENDRE", reprendre_jeu);
+		var recommencer:FlxButton = new FlxButton((640 - 80) / 2, (480 - 20) / 2, "RECOMMENCER", recommencer_jeu);
+		var option:FlxButton = new FlxButton((640 - 80) / 2, (480 - 20) / 2 + 20, "OPTION", option_jeu);
 		menu_pause.loadGraphic("assets/space3.png");
 		
 		add(menu_pause);
 		add(reprendre);
 		add(recommencer);
+		add(option);
 	}
 	
 	function reprendre_jeu()
